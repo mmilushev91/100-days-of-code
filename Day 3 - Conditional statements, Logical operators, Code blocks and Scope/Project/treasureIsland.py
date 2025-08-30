@@ -1,4 +1,4 @@
-print(r'''
+print('''
 *******************************************************************************
           |                   |                  |                     |
  _________|________________.=""_;=.______________|_____________________|_______
@@ -23,25 +23,31 @@ ____/______/______/______/______/_____"=.o|o_.--""___/______/______/______/____
 print("Welcome to Treasure Island.")
 print("Your mission is to find the treasure.")
 
-print("You are at a crossroad. Where do you want to go?")
-
-direction = input('    Type "left" or "right"\n  ').lower()
+direction = input('You\'re at a crossroad.'
+                  ' Where do you want to go?\n'
+                  ' Type "left" or "right"\n').lower()
 
 if direction != "left":
     print("You fall into a hole. Game over!")
 else:
-    print("You have come to a lake. There is an island in middle of the lake")
-    action = input('    Type "wait" to wait for a boat. Type "swim" to swim across\n  ').lower()
+    action = input('You\'ve come to a lake.\n'
+                   ' There is an island in middle of the lake.'
+                   ' Type "wait" to wait for a boat.'
+                   ' Type "swim" to swim across\n').lower()
 
     if action != "wait":
-        print("You have been attacked by a crocodile. Game over!")
+        print("You have been attacked by a crocodile. Game over.")
     else:
-        print("You arrived at the island unharmed. There is a house with three doors.")
-        door = input("One red, one blue, and one yellow. Which color do you choose?\n ").lower()
+        door = input('You\'ve arrived at the island unharmed.'
+                     ' There is a house with three doors.'
+                     ' One red, one blue, and one yellow.\n'
+                     ' Which color do you choose?\n').lower()
 
         if door == "red":
-            print("Burned by Fire. Game over")
+            print("Burned by Fire. Game over.")
         elif door == "blue":
-            print("Eaten by beasts. Game over!")
-        else:
+            print("Eaten by beasts. Game over.")
+        elif door == "yellow":
             print("You win!")
+        else:
+            print("You have chosen a door that doesn't exit. Game over.")
