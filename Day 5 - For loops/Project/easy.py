@@ -10,21 +10,14 @@ nr_symbols = int(input(f"How many symbols would you like?\n"))
 nr_numbers = int(input(f"How many numbers would you like?\n"))
 
 password = ""
-last_letters_index = len(letters) - 1
-last_symbols_index = len(symbols) - 1
-last_numbers_index = len(numbers) - 1
-
 
 for letter in range(nr_letters):
-    random_index = random.randint(0, last_letters_index)
-    password += letters[random_index]
+    password += random.choice(letters)
 
 for letter in range(nr_symbols):
-    random_index = random.randint(0, last_symbols_index)
-    password += symbols[random_index]
+    password += random.choice(symbols)
 
 for letter in range(nr_numbers):
-    random_index = random.randint(0, last_numbers_index)
-    password += numbers[random_index]
+    password += random.choice(numbers)
 
 print(f"Your password is: {password}")
