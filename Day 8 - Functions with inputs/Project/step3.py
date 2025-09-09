@@ -36,7 +36,7 @@ while program_runs:
 
     caesar(original_text=text, shift_amount=shift, encode_or_decode=direction)
 
-    restart = input("Type 'yes' if you want to go again. Otherwise type 'no': ")
+    restart = input("Type 'yes' if you want to go again. Otherwise type 'no': ").lower()
 
     if restart != "yes":
         program_runs = False
