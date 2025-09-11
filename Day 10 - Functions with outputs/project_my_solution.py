@@ -4,23 +4,19 @@ def print_operators(operations_data):
     for operator in operations_data:
         print(operator)
 
-def calculator(num1, num2, operator, operations_data):
-    return operations_data[operator](num1, num2)
-
-operations = {
-    "+": lambda a, b: a + b,
-    "-": lambda a, b: a - b,
-    "*": lambda a, b: a * b,
-    "/": lambda a, b: a / b,
-}
-
-outer_loop_runs = True
-
-while outer_loop_runs:
-    inner_loop_runs = True
-
+def calculator():
+    
+    operations = {
+        "+": lambda a, b: a + b,
+        "-": lambda a, b: a - b,
+        "*": lambda a, b: a * b,
+        "/": lambda a, b: a / b,
+    }
+    
     print(logo)
+    
     first_number = float(input("What's the first number?: "))
+    inner_loop_runs = True
 
     while inner_loop_runs:
         print_operators(operations)
@@ -28,7 +24,7 @@ while outer_loop_runs:
         operation = input("Pick operation: ")
         second_number = float(input("What's the next number?: "))
 
-        result = calculator(first_number, second_number, operation, operations)
+        result = operations[operation](first_number, second_number)
 
         print(f"{first_number} {operation} {second_number} = {result}")
 
@@ -40,4 +36,6 @@ while outer_loop_runs:
         if restart_inner_loop == "n":
             inner_loop_runs = False
             print("\n" * 50)
+            calculator()
 
+calculator()
