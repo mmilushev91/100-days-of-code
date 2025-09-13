@@ -1,11 +1,10 @@
 from random import choice
+from art import logo
 
 def generate_random_cards(cards, number):
     random_cards = []
-    
     for _ in range(number):
         random_cards.append(choice(cards))
-    
     return random_cards
 
 def calculate_score(cards):
@@ -13,103 +12,74 @@ def calculate_score(cards):
 
 def display_current_stats(cards, computer_hand, score):
     computer_first_card = computer_hand[0]
-    
     print(f"Your cards: {cards}, current score: {score}")
     print(f"Computer's first card: {computer_first_card}")
 
 def display_final_stats(p_cards, computer_hand, p_score, c_score):
     print(f"Your final hand: {p_cards}, final score: {p_score}")
     print(f"Computer's final hand: {computer_hand}, final score: {c_score}")
-    
+
 def blackjack():
-    
-    all_cards = [11, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10]
-    player_cards = []
-    computer_cards = []
-    player_score = 0
-    computer_score = 0
-    
-    print("Welcome to Blackjack Game!")
-    
-    game_on = input("Do you want to play a game of Blackjack? Type 'y' or 'n': ")
-    
-    if game_on == "y":
-    
-        player_cards.extend(generate_random_cards(cards=all_cards, number=2))
-        computer_cards.extend(generate_random_cards(cards=all_cards, number=1))
+    while True: 
+        print(logo)
+        game_on = input("Do you want to play a game of Blackjack? Type 'y' or 'n': ")
+
+        if game_on != "y":
+            break  
+
+        all_cards = [11, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10]
+        player_cards = generate_random_cards(all_cards, 2)
+        computer_cards = generate_random_cards(all_cards, 1)
+
         player_score = calculate_score(player_cards)
+        computer_score = calculate_score(computer_cards)
+
         display_current_stats(player_cards, computer_cards, player_score)
-        
+
         if player_score == 21:
             print("Win with a Blackjack 😎")
-            blackjack()
-        elif player_score == 22:
+            continue
+        elif player_score > 21:
             print("You went over. You lose 😭")
-            blackjack()
+            continue
             
-        another_card = input("Type 'y' to get another card, type 'n' to pass: ").lower()
-        
-        went_over = False
-        
-        while another_card == "y":
-            player_cards.extend(generate_random_cards(cards=all_cards, number= 1))
+        while input("Type 'y' to get another card, type 'n' to pass: ").lower() == "y":
+            player_cards.extend(generate_random_cards(all_cards, 1))
             player_score = calculate_score(player_cards)
-            
-            if player_score > 21:
-                if player_cards[-1] == 11:
-                    player_cards[-1] = 1 
-                    player_score = calculate_score(player_cards)
-                else:
-                    went_over = True
-            
+
+            if player_score > 21 and 11 in player_cards:
+                player_cards[player_cards.index(11)] = 1
+                player_score = calculate_score(player_cards)
+
             display_current_stats(player_cards, computer_cards, player_score)
-            
-            if went_over:
-                computer_score = calculate_score(computer_cards)
+
+            if player_score > 21:
                 display_final_stats(player_cards, computer_cards, player_score, computer_score)
                 print("You went over. You lose 😭")
-                blackjack()
+                break
+
+        if player_score > 21:
+            continue
             
-            another_card = input("Type 'y' to get another card, type 'n' to pass: ").lower()
-        
-        went_over = False
-        
         while computer_score < 17:
-            computer_cards.extend(generate_random_cards(computer_cards, 1))
+            computer_cards.extend(generate_random_cards(all_cards, 1))
             computer_score = calculate_score(computer_cards)
-            
-            if computer_score > 21:
-                if computer_cards[-1] == 11:
-                    computer_cards[-1] = 1 
-                    computer_score = calculate_score(computer_cards)
-                else:
-                    went_over = True
-                
-            if went_over:
-                display_final_stats(player_cards, computer_cards, player_score, computer_score)
-                print("Opponent went over. You win 😁")
-                blackjack()
-        
+
+            if computer_score > 21 and 11 in computer_cards:
+                computer_cards[computer_cards.index(11)] = 1
+                computer_score = calculate_score(computer_cards)
+
         display_final_stats(player_cards, computer_cards, player_score, computer_score)
-        
-        if computer_score == player_score:
+
+        if computer_score > 21:
+            print("Opponent went over. You win 😁")
+        elif computer_score == player_score:
             print("Draw 🙃")
-            blackjack()
+        elif computer_score == 21 and len(computer_cards) == 2:
+            print("Your Opponent has a Blackjack 😱 You lose 😤")
         elif computer_score > player_score:
-            
-            if computer_score == 21 and len(computer_cards) == 2:
-                print("Your Opponent has a Blackjack")
             print("You lose 😤")
-            blackjack()
-            
         else:
             print("You win 😁")
-            blackjack()
 
 blackjack()
-        
-    
-
-
-
-
