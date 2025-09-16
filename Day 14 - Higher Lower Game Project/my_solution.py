@@ -35,7 +35,6 @@ def is_correct(a, b, answer):
     else:
         return False
     
-    
 def game():
     
     game_on = True
