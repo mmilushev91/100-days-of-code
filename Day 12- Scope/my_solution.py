@@ -1,6 +1,6 @@
 from random import randint
 
-def return_attemps_count():
+def init_attempts():
     mode_attempts = {
         "easy": 10,
         "hard": 5,
@@ -14,7 +14,7 @@ def return_attemps_count():
     
     return mode_attempts[mode]
 
-def return_guess_number():
+def input_guess_number():
     guess = input("Make a guess: ")
     
     while not guess.isnumeric():
@@ -22,8 +22,25 @@ def return_guess_number():
         guess = input("Make a guess: ")
     
     return int(guess)
+
+def compare(guess, attempts, r_number):
+    if guess == r_number:
+        print(f"You got it! The answer was {r_number}")
+    else:
+        attempts-= 1
+        
+        if attempts == 0:
+            print(f"You've run out of guesses. Start new game.")
+            
+        elif guess > r_number:
+            print("Too High")
+        else:
+            print("Too Low")
     
-def number_guessing_game():
+    return attempts
+            
+    
+def game():
     logo = """
  _   _                 _                                              
  _   _                 _                 
@@ -46,30 +63,20 @@ def number_guessing_game():
     print("Welcome to the Number Guessing Game!")
     print("I'm thinking of a number between 1 and 100.")
     
-    attempts_count = return_attemps_count()
+    attempts_count = init_attempts()
     
     print(f"You have {attempts_count} attempts remaining to guess the number.")
     
     while attempts_count > 0:
-        guess_number = return_guess_number()
-        
-        if guess_number == random_number:
-            print(f"You got it! The answer was {random_number}.")
-            break
-        
-        attempts_count -= 1
+        guess_number = input_guess_number()
+        attempts_count = compare(guess=guess_number, attempts=attempts_count, r_number=random_number)
         
         if attempts_count == 0:
             continue
-        
-        if guess_number > random_number:
-            print("Too High")
-        else:
-            print("Too Low")
+        if guess_number == random_number:
+            break
         
         print("Guess again.")
         print(f"You have {attempts_count} attempts remaining to guess the number.")
-    else:
-        print(f"You've run out of guesses. Start new game.")
-        
-number_guessing_game()
+
+game()
