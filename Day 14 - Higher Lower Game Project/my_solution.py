@@ -47,7 +47,6 @@ def game():
         display_celebrities(choice_a, choice_b, vs_logo)
         
         user_answer = validate_answer()
-        print(user_answer)
         
         if is_correct(choice_a, choice_b, user_answer):
             score += 1
