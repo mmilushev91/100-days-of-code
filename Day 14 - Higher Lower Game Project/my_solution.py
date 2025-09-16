@@ -351,6 +351,8 @@ def game():
             print(f"You're right! Current score: {score}.")
         else:
             game_on = False
+            print("\n" * 20)
+            print(game_logo)
             print(f"Sorry, that's wrong. Final score: {score}")
-            
+       
 game()
