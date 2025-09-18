@@ -9,21 +9,15 @@ def print_report(resources, money):
     print(f"Money: ${money["value"]}")
 
 def are_resources_enough(drink, resources):
-    enough_resources = True
     
     for ingredient in drink["ingredients"]:
         resource = drink["ingredients"][ingredient]
             
         if resource > resources[ingredient]:
-            
             print(f"Sorry there is not enough {ingredient}.")
-            enough_resources = False
-    
-    if enough_resources:
-        return True
-    
-    return False
-    
+            return False
+    return True
+
 def validate_coin_amount(coin_name):
     coin = input(f"How many {coin_name}? ")
     
@@ -32,6 +26,15 @@ def validate_coin_amount(coin_name):
         coin = input(f"How many {coin_name}? ")
     
     return int(coin)
+
+def calculate_paid():
+    print("Please insert coins: ")
+    paid = validate_coin_amount("quaters") * 0.25
+    dimes += validate_coin_amount("dimes") * 0.10
+    nickles = validate_coin_amount("nickles") * 0.05
+    pennies = validate_coin_amount("pennies") * 0.01
+
+    return paid
     
 def deduct_resources(drink, resources):
     for ingredient in drink["ingredients"]:
@@ -56,32 +59,25 @@ def coffee_machine():
         
         if action == "off":
             machine_on = False
-            continue
-        
-        if action == "report":
+                    
+        elif action == "report":
             print_report(resources=machine_resources, money=machine_money)
     
         elif action in ["espresso", "latte", "cappuccino"]:
             choicen_drink = MENU[action]
            
             if are_resources_enough(drink=choicen_drink, resources=machine_resources):
-                
-                quaters = validate_coin_amount("quaters")
-                dimes = validate_coin_amount("dimes")
-                nickles = validate_coin_amount("nickles")
-                pennies = validate_coin_amount("pennies")
-                
-                paid = quaters * 0.25 + dimes * 0.10 + nickles * 0.05 + pennies * 0.01
+                money_paid = calculate_paid()       
                 cost = choicen_drink["cost"]
                 
-                if paid < cost:
+                if money_paid < cost:
                     print("Sorry that's not enough money. Money refunded.")
                     continue
                 
                 deduct_resources(drink=choicen_drink, resources=machine_resources)
                 change = 0
                 
-                if paid > cost:
+                if money_paid > cost:
                     change = paid - cost
                     print(f"Here is ${change:.2f} dollars in change.")
                 
