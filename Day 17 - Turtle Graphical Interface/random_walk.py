@@ -14,7 +14,9 @@ step = Turtle()
 step_length = 50
 walk_length = 100
 
+#change line width
 step.pensize(5)
+step.speed("fastest")
 #make repetitive
 for _ in range(walk_length):
     # set random color
