@@ -31,9 +31,9 @@ while game_on:
   #Detect collusion with food
   if snake.head.distance(food) < 15:
     food.refresh()
-    scoreboard.update_score()
+    scoreboard.increase_score()
     snake.ate = True
-    snake.eat()
+    snake.grow()
   else:
       snake.ate = False
 
