@@ -1,75 +1,52 @@
-from turtle import Turtle
+from time import sleep
+from turtle import Screen
+from scoreboard import Scoreboard
+from snake import Snake
+from food import Food
 
-SNAKE_PACE = 20
-UP = 90
-DOWN = 270
-LEFT = 180
-RIGHT = 0
+screen = Screen()
+screen.setup(width=600, height=600)
+screen.bgcolor("black")
+screen.title("My Snake Game")
+screen.tracer(0)
 
-class Snake:
+snake = Snake(shape="square", color="white")
+food = Food()
+scoreboard = Scoreboard()
 
-    def __init__(self, shape, color) -> None:
-        self.shape = shape
-        self.color = color
-        self.snake = []
-        self.create()
-        self.head = self.snake[0]
-        self.ate = False
+screen.listen()
+screen.onkey(fun=snake.up, key="w")
+screen.onkey(fun=snake.down, key="s")
+screen.onkey(fun=snake.left, key="a")
+screen.onkey(fun=snake.right, key="d")
 
-    def create_snake_segment(self):
-        segment = Turtle(shape=self.shape)
-        segment.penup()
-        segment.speed("fastest")
+game_on = True
 
-        return segment
+while game_on:
+  screen.update()
+  sleep(0.1)
 
-    def create(self) -> None:
+  snake.move()
 
-        for x in range(0, -60, -20):
-            segment = self.create_snake_segment()
-            segment.color("white")
-            segment.setx(x)
-            self.snake.append(segment)
+  #Detect collusion with food
+  if snake.head.distance(food) < 15:
+    food.refresh()
+    scoreboard.increase_score()
+    snake.ate = True
+    snake.grow()
+  else:
+      snake.ate = False
 
-    def move(self) -> None:
-        snake_body_last_index = len(self.snake) - 1
+  #Detect collusion with wall
+  if snake.head.xcor() >= 290 or snake.head.xcor() <= -290 or \
+    snake.head.ycor() >= 290 or snake.head.ycor() <= -290:
+    scoreboard.game_over()
+    game_on = False
 
-        if self.ate:
-            self.snake[snake_body_last_index].color("white")
+  #Detect collusion with tail
 
-        for i in range(snake_body_last_index, 0, -1):
-            new_x_cord = self.snake[i - 1].xcor()
-            new_y_cord = self.snake[i - 1].ycor()
-            self.snake[i].goto(new_x_cord, new_y_cord)
+  if snake.tail_collusion():
+    scoreboard.game_over()
+    game_on = False
 
-        self.head.forward(SNAKE_PACE)
-
-    def up(self):
-
-        if self.head.heading() != DOWN:
-            self.head.setheading(UP)
-
-    def down(self):
-
-        if self.head.heading() != UP:
-            self.head.setheading(DOWN)
-
-    def left(self):
-        if self.head.heading() != RIGHT:
-            self.head.setheading(LEFT)
-
-    def right(self):
-        if self.head.heading() != LEFT:
-            self.head.setheading(RIGHT)
-
-    def eat(self):
-        self.snake.append(self.create_snake_segment())
-
-    def tail_collusion(self):
-        snake_len = len(self.snake)
-
-        for i in range(1, snake_len):
-            if self.head.distance(self.snake[i]) < 10:
-                return True
-
-        return False
+screen.exitonclick()
