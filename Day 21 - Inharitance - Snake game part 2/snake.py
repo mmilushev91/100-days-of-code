@@ -65,4 +65,11 @@ class Snake:
     def eat(self):
         self.snake.append(self.create_snake_segment())
 
+    def tail_collusion(self):
+        snake_len = len(self.snake)
 
+        for i in range(1, snake_len):
+            if self.head.distance(self.snake[i]) < 10:
+                return True
+
+        return False
