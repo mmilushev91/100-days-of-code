@@ -12,23 +12,19 @@ class Ball(Turtle):
     self.penup()
     self.color("white")
     self.shape("circle")
-    
-  def move(self):
-    # new_x = self.xcor() + 10 if self.xcor() > 0 else self.xcor() - 10
-    # new_y = 0
-    
-    # if self.ycor() > 300:
-    #   self.setheading(180)
-    #   new_y = self.ycor() + 10
-      
-    # elif self.ycor() < -300:
-    #   self.setheading(90)
-    #   new_y = self.ycor() - 10
+    self.x_move = 10
+    self.y_move = 10
 
-    new_x = self.xcor() + 10 
-    new_y = self.ycor() + 10
-      
-    
+  def bounce_x(self):
+    self.x_move *= -1
+
+  def bounce_y(self):
+    self.y_move *= -1
+
+  def move(self):
+    new_x = self.xcor() + self.x_move
+    new_y = self.ycor() + self.y_move
+
     self.goto(x=new_x, y=new_y)
 
 
