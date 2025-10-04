@@ -7,26 +7,26 @@ DOWN_ANGLE = 270
 UP_LIMIT = 280
 DOWN_LIMIT = -280
 
+
 class Paddle(Turtle):
 
-  def __init__(self, start_x):
-    super().__init__()
-    self.start_x = start_x
-    self.create()
-    
-  def create(self):
-    self.shape("square")
-    self.shapesize(stretch_wid=1, stretch_len=5)
-    self.setheading(UP_ANGLE)
-    self.penup()
-    self.goto(x=self.start_x, y=START_Y)
-    self.color("white")
+    def __init__(self, start_x):
+        super().__init__()
+        self.start_x = start_x
+        self.create()
 
-  def up(self):
-    if self.ycor() + PACE < UP_LIMIT:
-      self.forward(PACE)
+    def create(self):
+        self.shape("square")
+        self.shapesize(stretch_wid=1, stretch_len=5)
+        self.setheading(UP_ANGLE)
+        self.penup()
+        self.goto(x=self.start_x, y=START_Y)
+        self.color("white")
 
-  def down(self):
-    if self.ycor() - PACE > DOWN_LIMIT:
-      self.backward(PACE)
-      
+    def up(self):
+        if self.ycor() + PACE < UP_LIMIT:
+            self.forward(PACE)
+
+    def down(self):
+        if self.ycor() - PACE > DOWN_LIMIT:
+            self.backward(PACE)
