@@ -25,12 +25,7 @@ while correct_answers < ALL_STATES_COUNT:
     answer = screen.textinput(title=f"{correct_answers}/{ALL_STATES_COUNT} States Correct", prompt="What's another state?").title()
 
     if answer == "Exit":
-        not_guessed_states = []
-
-        for state in states_list:
-            if state not in guessed_list:
-                not_guessed_states.append(state)
-
+        not_guessed_states = [state for state in states_list if state not in guessed_list]
         states_to_learn = p.DataFrame(not_guessed_states)
         states_to_learn.to_csv("./states_to_learn.csv")
 
